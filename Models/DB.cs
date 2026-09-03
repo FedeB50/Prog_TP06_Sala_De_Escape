@@ -1,7 +1,7 @@
-namespace Tp06_Barg.Models;
+namespace TP06.Models;
 using Microsoft.Data.SqlClient;
 using Dapper;
-using Tp06_Barg.Models;
+using TP06.Models;
 public class DB
 {
     string _connectionString = @"Server=localhost;DataBase=Tp06_Barg;Integrated Security=True;TrustServerCertificate=True;";
@@ -23,7 +23,7 @@ public class DB
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute("INSERT INTO Partidas (idUsuario, salaActual, estado) VALUES (@IdUsuario, 1, 'No iniciada')", new { IdUsuario = idUsuario});
+            connection.Execute("INSERT INTO Partidas (idUsuarios, idSalaActual, estado) VALUES (@IdUsuario, 1, 'No iniciada')", new { IdUsuario = idUsuario});
         }
     }
     public void ActualizarSala(int idPartida, int salaActual)
@@ -38,6 +38,13 @@ public class DB
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             connection.Execute("UPDATE Partidas SET estado = @Estado WHERE id = @IdPartida", new { IdPartida = idPartida, Estado = estado });
+        }
+    }
+    public Salas GetSala(int idSala)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            return connection.QueryFirstOrDefault<Salas>("SELECT * FROM Salas WHERE id = @IdSala", new { IdSala = idSala });
         }
     }
 }

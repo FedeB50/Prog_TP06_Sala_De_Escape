@@ -1,14 +1,16 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<div class="text-center">
-    <h1>Bienvenido</h1>
-    
-    <form method="post" action="crearUsuario">
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required />
-        </div>
-        <button type="submit">Comenzar</button>
-    </form>
-</div>
+<section class="home">
+    <div class="text-center">
+        <h1>Bienvenido</h1>
+        
+        <form method="post" asp-controller="Home" asp-action="crearUsuario">
+            <div>
+                <label for="nombre">Nombre:</label>
+                <input type="text" id="nombre" name="nombre" placeholder="Ingrese su nombre" required />
+            </div>
+            <button type="submit">Comenzar</button>
+        </form>
+    </div>
+</section>
