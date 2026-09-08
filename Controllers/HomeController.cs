@@ -22,15 +22,17 @@ public class HomeController : Controller
     public IActionResult crearUsuario(string nombre)
     {
         DB db = new DB();
-        db.InsertarUsuario(nombre);
-        return RedirectToAction("CrearPartida");
+        int idUsuario = db.InsertarUsuario(nombre);
+        HttpContext.Session.SetString("nombreUsuario", nombre);
+        return RedirectToAction("CrearPartida", new { idUsuario });
     }
     
-    public IActionResult CrearPartida()
+    public IActionResult CrearPartida(int idUsuario)
     {
         DB db = new DB();
-        int idUsuario = db.GetIdUsuario();
-        db.InsertarPartida(idUsuario);
+        Partidas partida = db.InsertarPartida(idUsuario);
+        HttpContext.Session.SetInt32("idPartida", partida.id);
+        HttpContext.Session.SetInt32("idSalaActual", partida.idSalaActual);
         return RedirectToAction("Sala");
     }
 
