@@ -20,12 +20,12 @@ public class DB
             return connection.QueryFirstOrDefault<int>("SELECT MAX(id) FROM Usuarios");
         }
     }
-    public Partidas InsertarPartida(int idUsuario)
+    public int InsertarPartida(int idUsuario)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             connection.Execute("INSERT INTO Partidas (idUsuarios, idSalaActual, estado) VALUES (@IdUsuario, (SELECT MIN(id) FROM Salas), 'No iniciada')", new { IdUsuario = idUsuario});
-            return connection.QueryFirstOrDefault<Partidas>("SELECT * FROM Partidas WHERE id = (SELECT MAX(id) FROM Partidas)");
+            return connection.QueryFirstOrDefault<int>("SELECT MAX(id) FROM Partidas", new { IdUsuario = idUsuario });
         }
     }
     public void ActualizarSala(int idPartida, int salaActual)
@@ -49,11 +49,28 @@ public class DB
             return connection.QueryFirstOrDefault<Salas>("SELECT * FROM Salas WHERE id = @IdSala", new { IdSala = idSala });
         }
     }
+    public Partidas GetPartida(int idPartida)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            return connection.QueryFirstOrDefault<Partidas>("SELECT * FROM Partidas WHERE id = @IdPartida", new { IdPartida = idPartida });
+        }
+    }
     public int GetIdPartida()
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
             return connection.QueryFirstOrDefault<int>("SELECT MAX(id) FROM Partidas");
         }
+    }
+    public bool VerificarRespuesta(int idSala, string respuesta)
+    {
+        int num;
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            num = connection.QueryFirstOrDefault<int>("SELECT id FROM Salas WHERE id = @IdSala AND respuesta = @Respuesta", new { IdSala = idSala, Respuesta = respuesta });
+        }
+        if (num == null) {return false;}
+        else{return true;}
     }
 }

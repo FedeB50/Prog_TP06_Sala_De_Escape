@@ -1,6 +1,11 @@
 ﻿@{
     ViewData["Title"] = "Sala";
 }
-<h1>@ViewData["Title"]</h1>
+<h2>Intentos fallidos: @ViewBag.cantidadIntentos/5</h2>
+<img src="~/images/sala1.jpg"/>
+<form method="post" asp-action="VerificarRespuesta">
+    <input type="text" id="respuesta" name="respuesta" required />
+    <button type="submit">Enviar</button>
+</form>
 
 

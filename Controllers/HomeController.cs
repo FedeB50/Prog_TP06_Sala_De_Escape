@@ -25,19 +25,92 @@ public class HomeController : Controller
         int idUsuario = db.InsertarUsuario(nombre);
         HttpContext.Session.SetString("nombreUsuario", nombre);
         return RedirectToAction("CrearPartida", new { idUsuario });
+
     }
     
     public IActionResult CrearPartida(int idUsuario)
     {
         DB db = new DB();
-        Partidas partida = db.InsertarPartida(idUsuario);
-        HttpContext.Session.SetInt32("idPartida", partida.id);
-        HttpContext.Session.SetInt32("idSalaActual", partida.idSalaActual);
+        int idPartida = db.InsertarPartida(idUsuario);
+        HttpContext.Session.SetString("idPartida", idPartida.ToString());
+        HttpContext.Session.SetString("idSalaActual", db.GetPartida(idPartida).idSalaActual.ToString());
+        ViewBag.cantidadIntentos = 0;
         return RedirectToAction("Sala");
     }
 
+    [HttpPost]
+    public IActionResult Intento(string respuesta)
+    {
+        int idPartida = int.Parse(HttpContext.Session.GetString("idPartida"));
+        int idSalaActual = int.Parse(HttpContext.Session.GetString("idSalaActual"));
+        DB db = new DB();
+        bool esCorrecta = db.VerificarRespuesta(idSalaActual, respuesta);
+        if (esCorrecta)
+        {
+            Partidas partida = db.GetPartida(idPartida);
+            partida.idSalaActual++;
+            db.ActualizarSala(partida.id, partida.idSalaActual);
+            db.ActualizarEstado(partida.id, "En progreso");
+            HttpContext.Session.SetString("idSalaActual", partida.idSalaActual.ToString());
+        }
+        else
+        {
+            ViewBag.cantidadIntentos ++;
+            if (ViewBag.cantidadIntentos >= 5)
+            {
+                db.ActualizarEstado(idPartida, "Perdida");
+                return RedirectToAction("Derrota");
+            }
+        }
+        return RedirectToAction("Sala", new { idSala = int.Parse(HttpContext.Session.GetString("idSalaActual")) });
+    }
 
-    public IActionResult Sala()
+    public IActionResult Sala(int idSala)
+    {
+        ViewBag.qa = idSala;
+        if (idSala == 1)
+        {
+            return RedirectToAction("Sala1");
+        }
+        else if (idSala == 2)
+        {
+            return RedirectToAction("Sala2");
+        }
+        else if (idSala == 3)
+        {
+            return RedirectToAction("Sala3");
+        }
+        else if (idSala == 4)
+        {
+            return RedirectToAction("Sala4");
+        }
+        else
+        {
+            return RedirectToAction("Victoria");
+        }
+    }
+
+    public IActionResult Sala1()
+    {
+        return View();
+    }
+
+    public IActionResult Sala2()
+    {
+        return View();
+    }
+
+    public IActionResult Sala3()
+    {
+        return View();
+    }
+
+    public IActionResult Sala4()
+    {
+        return View();
+    }
+
+    public IActionResult Victoria()
     {
         return View();
     }
