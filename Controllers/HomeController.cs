@@ -21,11 +21,12 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult crearUsuario(string nombre)
     {
+        ViewBag.cantidadIntentos = 0;
         DB db = new DB();
-        int idUsuario = db.InsertarUsuario(nombre);
+        db.InsertarUsuario(nombre);
+        int idUsuario = db.GetIdUsuario();
         HttpContext.Session.SetString("nombreUsuario", nombre);
-        return RedirectToAction("CrearPartida", new { idUsuario });
-
+        return RedirectToAction("CrearPartida", new { idUsuario = idUsuario });
     }
     
     public IActionResult CrearPartida(int idUsuario)
@@ -34,8 +35,8 @@ public class HomeController : Controller
         int idPartida = db.InsertarPartida(idUsuario);
         HttpContext.Session.SetString("idPartida", idPartida.ToString());
         HttpContext.Session.SetString("idSalaActual", db.GetPartida(idPartida).idSalaActual.ToString());
-        ViewBag.cantidadIntentos = 0;
-        return RedirectToAction("Sala");
+
+        return RedirectToAction("Sala", new { idSala = int.Parse(HttpContext.Session.GetString("idSalaActual")) });
     }
 
     [HttpPost]
@@ -68,26 +69,12 @@ public class HomeController : Controller
     public IActionResult Sala(int idSala)
     {
         ViewBag.qa = idSala;
-        if (idSala == 1)
+        if (idSala >= 1 && idSala <= 4)
         {
-            return RedirectToAction("Sala1");
+            string sala = "Sala" + idSala;
+            return RedirectToAction(sala);
         }
-        else if (idSala == 2)
-        {
-            return RedirectToAction("Sala2");
-        }
-        else if (idSala == 3)
-        {
-            return RedirectToAction("Sala3");
-        }
-        else if (idSala == 4)
-        {
-            return RedirectToAction("Sala4");
-        }
-        else
-        {
-            return RedirectToAction("Victoria");
-        }
+        return RedirectToAction("Victoria");
     }
 
     public IActionResult Sala1()
@@ -111,6 +98,11 @@ public class HomeController : Controller
     }
 
     public IActionResult Victoria()
+    {
+        return View();
+    }
+    
+    public IActionResult Derrota()
     {
         return View();
     }
