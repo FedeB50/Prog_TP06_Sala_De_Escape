@@ -21,7 +21,6 @@ public class HomeController : Controller
     [HttpPost]
     public IActionResult crearUsuario(string nombre)
     {
-        ViewBag.cantidadIntentos = 0;
         DB db = new DB();
         db.InsertarUsuario(nombre);
         int idUsuario = db.GetIdUsuario();
@@ -31,11 +30,11 @@ public class HomeController : Controller
     
     public IActionResult CrearPartida(int idUsuario)
     {
+        HttpContext.Session.SetString("intentosIncorrectos", "0");
         DB db = new DB();
         int idPartida = db.InsertarPartida(idUsuario);
         HttpContext.Session.SetString("idPartida", idPartida.ToString());
         HttpContext.Session.SetString("idSalaActual", db.GetPartida(idPartida).idSalaActual.ToString());
-
         return RedirectToAction("Sala", new { idSala = int.Parse(HttpContext.Session.GetString("idSalaActual")) });
     }
 
@@ -45,33 +44,34 @@ public class HomeController : Controller
         int idPartida = int.Parse(HttpContext.Session.GetString("idPartida"));
         int idSalaActual = int.Parse(HttpContext.Session.GetString("idSalaActual"));
         DB db = new DB();
-        bool esCorrecta = db.VerificarRespuesta(idSalaActual, respuesta);
-        if (esCorrecta)
+        if (db.VerificarRespuesta(idSalaActual, respuesta))
         {
+            HttpContext.Session.SetString("intentosIncorrectos", "0");
             Partidas partida = db.GetPartida(idPartida);
             partida.idSalaActual++;
             db.ActualizarSala(partida.id, partida.idSalaActual);
             db.ActualizarEstado(partida.id, "En progreso");
             HttpContext.Session.SetString("idSalaActual", partida.idSalaActual.ToString());
-        }
-        else
+        } else
         {
-            ViewBag.cantidadIntentos ++;
-            if (ViewBag.cantidadIntentos >= 5)
+            int intentosIncorrectos = int.Parse(HttpContext.Session.GetString("intentosIncorrectos"));
+            intentosIncorrectos++;
+            HttpContext.Session.SetString("intentosIncorrectos", intentosIncorrectos.ToString());
+            if (intentosIncorrectos >= 5)
             {
                 db.ActualizarEstado(idPartida, "Perdida");
                 return RedirectToAction("Derrota");
             }
         }
-        return RedirectToAction("Sala", new { idSala = int.Parse(HttpContext.Session.GetString("idSalaActual")) });
+        return RedirectToAction("Sala");
     }
 
-    public IActionResult Sala(int idSala)
+    public IActionResult Sala()
     {
-        ViewBag.qa = idSala;
-        if (idSala >= 1 && idSala <= 4)
+        if (int.Parse(HttpContext.Session.GetString("idSalaActual")) >= 1 && int.Parse(HttpContext.Session.GetString("idSalaActual")) <= 4)
         {
-            string sala = "Sala" + idSala;
+            string sala = "Sala" + HttpContext.Session.GetString("idSalaActual");
+            ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
             return RedirectToAction(sala);
         }
         return RedirectToAction("Victoria");

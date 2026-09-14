@@ -31,7 +31,7 @@ public class DB
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            connection.Execute("UPDATE Partidas SET salaActual = @SalaActual WHERE id = @IdPartida", new { IdPartida = idPartida, SalaActual = salaActual });
+            connection.Execute("UPDATE Partidas SET idSalaActual = @SalaActual WHERE id = @IdPartida", new { IdPartida = idPartida, SalaActual = salaActual });
         }
     }
     public void ActualizarEstado(int idPartida, string estado)
@@ -64,12 +64,9 @@ public class DB
     }
     public bool VerificarRespuesta(int idSala, string respuesta)
     {
-        int num;
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            num = connection.QueryFirstOrDefault<int>("SELECT id FROM Salas WHERE id = @IdSala AND respuesta = @Respuesta", new { IdSala = idSala, Respuesta = respuesta });
+            int id = connection.QueryFirstOrDefault<int?>("SELECT id FROM Salas WHERE id = @IdSala AND solucion = @Respuesta", new { IdSala = idSala, Respuesta = respuesta });
         }
-        if (num == null) {return false;}
-        else{return true;}
     }
 }
