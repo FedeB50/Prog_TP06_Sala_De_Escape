@@ -79,21 +79,25 @@ public class HomeController : Controller
 
     public IActionResult Sala1()
     {
+        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 
     public IActionResult Sala2()
     {
+        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 
     public IActionResult Sala3()
     {
+        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 
     public IActionResult Sala4()
     {
+        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 

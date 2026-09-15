@@ -64,9 +64,12 @@ public class DB
     }
     public bool VerificarRespuesta(int idSala, string respuesta)
     {
+        int? id;
         using (SqlConnection connection = new SqlConnection(_connectionString))
         {
-            int id = connection.QueryFirstOrDefault<int?>("SELECT id FROM Salas WHERE id = @IdSala AND solucion = @Respuesta", new { IdSala = idSala, Respuesta = respuesta });
+            id = connection.QueryFirstOrDefault<int?>("SELECT id FROM Salas WHERE id = @IdSala AND solucion = @Respuesta", new { IdSala = idSala, Respuesta = respuesta });
         }
+        if (id > 0) {return true;}
+        else {return false;}
     }
 }
