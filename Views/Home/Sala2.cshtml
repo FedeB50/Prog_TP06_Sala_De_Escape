@@ -1,8 +1,8 @@
 @{
     ViewData["Title"] = "Sala 2";
 }
-<h2>Intentos fallidos: @ViewBag.intentosIncorrectos/5</h2>
-<img src="~/images/Sala2.jpg"/>
+<h2>Intentos fallidos: @ViewBag.cantidadIntentos/5</h2>
+<img src="/images/Sala2.png"/>
 <h1>△ □ ○</h1>
 <form method="post" asp-controller="Home" asp-action="Intento">
     <input type="text" id="respuesta" name="respuesta" required />

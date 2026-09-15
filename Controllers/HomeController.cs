@@ -70,6 +70,10 @@ public class HomeController : Controller
     {
         if (int.Parse(HttpContext.Session.GetString("idSalaActual")) >= 1 && int.Parse(HttpContext.Session.GetString("idSalaActual")) <= 4)
         {
+            if (int.Parse(HttpContext.Session.GetString("intentosIncorrectos")) >= 5)
+            {
+                return RedirectToAction("Derrota");
+            }
             string sala = "Sala" + HttpContext.Session.GetString("idSalaActual");
             ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
             return RedirectToAction(sala);
@@ -79,35 +83,59 @@ public class HomeController : Controller
 
     public IActionResult Sala1()
     {
+        if (HttpContext.Session.GetString("idSalaActual") != "1")
+        {
+            return RedirectToAction("Sala");
+        }
         ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 
     public IActionResult Sala2()
     {
+        if (HttpContext.Session.GetString("idSalaActual") != "1")
+        {
+            return RedirectToAction("Sala");
+        }
         ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 
     public IActionResult Sala3()
     {
+        if (HttpContext.Session.GetString("idSalaActual") != "1")
+        {
+            return RedirectToAction("Sala");
+        }
         ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 
     public IActionResult Sala4()
     {
+        if (HttpContext.Session.GetString("idSalaActual") != "1")
+        {
+            return RedirectToAction("Sala");
+        }
         ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
         return View();
     }
 
     public IActionResult Victoria()
     {
+        if (HttpContext.Session.GetString("idSalaActual") != "1")
+        {
+            return RedirectToAction("Sala");
+        }
         return View();
     }
     
     public IActionResult Derrota()
     {
+        if (HttpContext.Session.GetString("idSalaActual") != "1")
+        {
+            return RedirectToAction("Sala");
+        }
         return View();
     }
 
