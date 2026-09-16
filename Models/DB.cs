@@ -48,6 +48,20 @@ public class DB
             return connection.QueryFirstOrDefault<Salas>("SELECT * FROM Salas WHERE id = @IdSala", new { IdSala = idSala });
         }
     }
+    public string GetImagen(int idSala)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            return connection.QueryFirstOrDefault<string>("SELECT imagen FROM Salas WHERE id = @IdSala", new { IdSala = idSala });
+        }
+    }
+    public string GetPista(int idSala)
+    {
+        using (SqlConnection connection = new SqlConnection(_connectionString))
+        {
+            return connection.QueryFirstOrDefault<string>("SELECT pista FROM Salas WHERE id = @IdSala", new { IdSala = idSala });
+        }
+    }
     public Partidas GetPartida(int idPartida)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))

@@ -1,12 +1,16 @@
-@{
-    ViewData["Title"] = "Sala 2";
+﻿@{
+    ViewData["Title"] = "Sala";
 }
 <h2>Intentos fallidos: @ViewBag.cantidadIntentos/5</h2>
-<img src="/images/Sala2.png"/>
-<h1>△ □ ○</h1>
+<img src="/images/@ViewBag.imagen" />
+<h2>@ViewBag.texto</h2>
 <form method="post" asp-controller="Home" asp-action="Intento">
     <input type="text" id="respuesta" name="respuesta" required />
     <button type="submit">Enviar</button>
+</form>
+<h2>@ViewBag.pista</h2>
+<form method="post" asp-controller="Home" asp-action="Pista">
+    <button type="submit">Pista</button>
 </form>
 
 

@@ -35,7 +35,7 @@ public class HomeController : Controller
         int idPartida = db.InsertarPartida(idUsuario);
         HttpContext.Session.SetString("idPartida", idPartida.ToString());
         HttpContext.Session.SetString("idSalaActual", db.GetPartida(idPartida).idSalaActual.ToString());
-        return RedirectToAction("Sala", new { idSala = int.Parse(HttpContext.Session.GetString("idSalaActual")) });
+        return RedirectToAction("Sala");
     }
 
     [HttpPost]
@@ -66,6 +66,13 @@ public class HomeController : Controller
         return RedirectToAction("Sala");
     }
 
+    public IActionResult Pista()
+    {
+        DB db = new DB();
+        ViewBag.pista = db.GetPista(int.Parse(HttpContext.Session.GetString("idSalaActual")));
+        return RedirectToAction("Sala");
+    } 
+
     public IActionResult Sala()
     {
         if (int.Parse(HttpContext.Session.GetString("idSalaActual")) >= 1 && int.Parse(HttpContext.Session.GetString("idSalaActual")) <= 4)
@@ -74,68 +81,25 @@ public class HomeController : Controller
             {
                 return RedirectToAction("Derrota");
             }
-            string sala = "Sala" + HttpContext.Session.GetString("idSalaActual");
+            if (int.Parse(HttpContext.Session.GetString("idSalaActual")) == 2)
+            {
+                ViewBag.texto = "△ ☐ ○";
+            }
             ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
-            return RedirectToAction(sala);
+            DB db = new DB();
+            ViewBag.imagen = db.GetImagen(int.Parse(HttpContext.Session.GetString("idSalaActual")));
+            return View();
         }
         return RedirectToAction("Victoria");
     }
 
-    public IActionResult Sala1()
-    {
-        if (HttpContext.Session.GetString("idSalaActual") != "1")
-        {
-            return RedirectToAction("Sala");
-        }
-        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
-        return View();
-    }
-
-    public IActionResult Sala2()
-    {
-        if (HttpContext.Session.GetString("idSalaActual") != "1")
-        {
-            return RedirectToAction("Sala");
-        }
-        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
-        return View();
-    }
-
-    public IActionResult Sala3()
-    {
-        if (HttpContext.Session.GetString("idSalaActual") != "1")
-        {
-            return RedirectToAction("Sala");
-        }
-        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
-        return View();
-    }
-
-    public IActionResult Sala4()
-    {
-        if (HttpContext.Session.GetString("idSalaActual") != "1")
-        {
-            return RedirectToAction("Sala");
-        }
-        ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
-        return View();
-    }
-
     public IActionResult Victoria()
     {
-        if (HttpContext.Session.GetString("idSalaActual") != "1")
-        {
-            return RedirectToAction("Sala");
-        }
         return View();
     }
     
     public IActionResult Derrota()
     {
-        if (HttpContext.Session.GetString("idSalaActual") != "1")
-        {
-            return RedirectToAction("Sala");
-        }
         return View();
     }
 
