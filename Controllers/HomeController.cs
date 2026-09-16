@@ -31,6 +31,7 @@ public class HomeController : Controller
     public IActionResult CrearPartida(int idUsuario)
     {
         HttpContext.Session.SetString("intentosIncorrectos", "0");
+        HttpContext.Session.SetString("pista", "");
         DB db = new DB();
         int idPartida = db.InsertarPartida(idUsuario);
         HttpContext.Session.SetString("idPartida", idPartida.ToString());
@@ -47,6 +48,7 @@ public class HomeController : Controller
         if (db.VerificarRespuesta(idSalaActual, respuesta))
         {
             HttpContext.Session.SetString("intentosIncorrectos", "0");
+            HttpContext.Session.SetString("pista", "");
             Partidas partida = db.GetPartida(idPartida);
             partida.idSalaActual++;
             db.ActualizarSala(partida.id, partida.idSalaActual);
@@ -69,7 +71,11 @@ public class HomeController : Controller
     public IActionResult Pista()
     {
         DB db = new DB();
-        ViewBag.pista = db.GetPista(int.Parse(HttpContext.Session.GetString("idSalaActual")));
+        if (HttpContext.Session.GetString("pista") != db.GetPista(int.Parse(HttpContext.Session.GetString("idSalaActual"))))
+        {
+            HttpContext.Session.SetString("intentosIncorrectos", (int.Parse(HttpContext.Session.GetString("intentosIncorrectos")) + 2).ToString());
+            HttpContext.Session.SetString("pista", db.GetPista(int.Parse(HttpContext.Session.GetString("idSalaActual"))));
+        } 
         return RedirectToAction("Sala");
     } 
 
@@ -86,6 +92,7 @@ public class HomeController : Controller
                 ViewBag.texto = "△ ☐ ○";
             }
             ViewBag.cantidadIntentos = HttpContext.Session.GetString("intentosIncorrectos");
+            ViewBag.pista = HttpContext.Session.GetString("pista");
             DB db = new DB();
             ViewBag.imagen = db.GetImagen(int.Parse(HttpContext.Session.GetString("idSalaActual")));
             return View();
