@@ -4,7 +4,7 @@ using Dapper;
 using TP06.Models;
 public class DB
 {
-    string _connectionString = @"Server=localhost;DataBase=Tp06_Barg;Integrated Security=True;TrustServerCertificate=True;";
+    string _connectionString = @"Server=localhost\SQLEXPRESS;DataBase=Tp06_Barg;Integrated Security=True;TrustServerCertificate=True;";
     public void InsertarUsuario(string nombre)
     {
         using (SqlConnection connection = new SqlConnection(_connectionString))
