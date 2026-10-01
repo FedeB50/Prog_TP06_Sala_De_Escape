@@ -24,6 +24,10 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxEZXJyb3RhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[Z:/4IB/Prog/TP06/Views/Home/Imagen.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbWFnZW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [Z:/4IB/Prog/TP06/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 

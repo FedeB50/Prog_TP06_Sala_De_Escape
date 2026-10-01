@@ -66,7 +66,6 @@ Z:\4IB\Prog\TP06\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\scopedcss\bundle\TP06.styles.css
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\scopedcss\projectbundle\TP06.bundle.scp.css
-Z:\4IB\Prog\TP06\obj\Debug\net9.0\compressed\7knrewp0mc-ktkj6bz9j4.gz
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\compressed\l424khjmqo-61n19gt1b8.gz
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\compressed\myogmasy63-xtxxf3hu2r.gz
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\compressed\ka9xf42kn5-bqjiyaj88i.gz
@@ -140,3 +139,4 @@ Z:\4IB\Prog\TP06\obj\Debug\net9.0\refint\TP06.dll
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\TP06.pdb
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\TP06.genruntimeconfig.cache
 Z:\4IB\Prog\TP06\obj\Debug\net9.0\ref\TP06.dll
+Z:\4IB\Prog\TP06\obj\Debug\net9.0\compressed\7knrewp0mc-paqo6m4s24.gz

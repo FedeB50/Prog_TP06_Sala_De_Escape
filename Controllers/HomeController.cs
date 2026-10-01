@@ -100,6 +100,13 @@ public class HomeController : Controller
         return RedirectToAction("Victoria");
     }
 
+    public IActionResult Imagen()
+    {
+        DB db = new DB();
+        ViewBag.imagen = db.GetImagen(int.Parse(HttpContext.Session.GetString("idSalaActual")));
+        return View();
+    }
+
     public IActionResult Victoria()
     {
         return View();

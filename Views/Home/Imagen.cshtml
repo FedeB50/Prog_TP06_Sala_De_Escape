@@ -1,0 +1,12 @@
+@{
+    ViewData["Title"] = "Imagen";
+}
+<section class="image-view-screen">
+    <div class="image-view-card">
+        <img src="/images/@ViewBag.imagen" alt="Imagen de la partida" class="large-image" />
+
+        <form method="post" asp-controller="Home" asp-action="Sala" class="image-back-form">
+            <button type="submit">Volver a la sala</button>
+        </form>
+    </div>
+</section>

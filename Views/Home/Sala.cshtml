@@ -1,16 +1,33 @@
 ﻿@{
     ViewData["Title"] = "Sala";
 }
-<h2>Intentos fallidos: @ViewBag.cantidadIntentos/5</h2>
-<img src="/images/@ViewBag.imagen" />
-<h2>@ViewBag.texto</h2>
-<form method="post" asp-controller="Home" asp-action="Intento">
-    <input type="text" id="respuesta" name="respuesta" required />
-    <button type="submit">Enviar</button>
-</form>
-<h2>@ViewBag.pista</h2>
-<form method="post" asp-controller="Home" asp-action="Pista">
-    <button type="submit">Pista (+2 intentos incorrectos)</button>
-</form>
+<section class="game-screen">
+    <div class="game-panel">
+        <div class="status-row">
+            <h2>Intentos fallidos: <span class="fail-counter">@ViewBag.cantidadIntentos/5</span></h2>
+        </div>
+
+        <div class="image-box">
+            <img src="/images/@ViewBag.imagen" alt="Imagen de la partida" />
+        </div>
+
+        <h2 class="phrase">@ViewBag.texto</h2>
+
+        <form method="post" asp-controller="Home" asp-action="Intento" class="guess-form">
+            <input type="text" id="respuesta" name="respuesta" placeholder="Escriba su respuesta" required />
+            <button type="submit">Enviar</button>
+        </form>
+
+        <h3 class="hint">@ViewBag.pista</h3>
+
+        <form method="post" asp-controller="Home" asp-action="Pista" class="secondary-form">
+            <button type="submit">Pista (+2 intentos incorrectos)</button>
+        </form>
+
+        <form method="post" asp-controller="Home" asp-action="Imagen" class="secondary-form">
+            <button type="submit">Ver imagen</button>
+        </form>
+    </div>
+</section>
 
 
